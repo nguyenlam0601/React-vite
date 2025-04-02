@@ -17,6 +17,9 @@ const TodoData = (props) => {
           <button>Update</button>
         </div>
       </div>
+      <div className="Todo-data">
+        <div className="data-content">{JSON.stringify(props.todoList)}</div>
+      </div>
     </div>
   );
 };

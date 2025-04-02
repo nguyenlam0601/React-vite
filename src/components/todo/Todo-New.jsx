@@ -1,12 +1,13 @@
+import { useState } from "react";
+
 const TodoNew = (props) => {
-  const { myFucntion } = props;
+  const [inputValue, setValue] = useState('eric')
   const handleClick = () => {
-    alert("click me");
+    console.log('value: ', inputValue)
   };
   const handleOnchage = (name) => {
-    console.log(name);
+    setValue(name)
   };
-  myFucntion("Ray");
   return (
     <div className="Todo-header">
       <input
@@ -17,6 +18,7 @@ const TodoNew = (props) => {
         }}
       ></input>
       <button onClick={handleClick}> Add</button>
+      <div>Input value: {inputValue}</div>
     </div>
   );
 };
