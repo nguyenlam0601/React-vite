@@ -13,7 +13,7 @@ const App = () => {
   ]);
 
   const myFucntion = (name) => {
-    const newTodo = [{ id: getRandomInt(1, 100), name: name }];
+    const newTodo = { id: getRandomInt(1, 100), name: name };
     setTodoList([...todoList, newTodo]);
   };
   const getRandomInt = (min, max) => {

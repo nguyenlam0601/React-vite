@@ -5,6 +5,7 @@ const TodoNew = (props) => {
   const { myFucntion } = props;
   const handleClick = () => {
     myFucntion(inputValue);
+    setValue("");
   };
   const handleOnchage = (name) => {
     setValue(name);
@@ -17,6 +18,7 @@ const TodoNew = (props) => {
         onChange={(event) => {
           handleOnchage(event.target.value);
         }}
+        value={inputValue}
       ></input>
       <button onClick={handleClick}> Add</button>
       <div>Input value: {inputValue}</div>
