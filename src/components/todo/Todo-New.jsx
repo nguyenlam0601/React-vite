@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 const TodoNew = (props) => {
-  const [inputValue, setValue] = useState('eric')
+  const [inputValue, setValue] = useState("eric");
+  const { myFucntion } = props;
   const handleClick = () => {
-    console.log('value: ', inputValue)
+    myFucntion(inputValue);
   };
   const handleOnchage = (name) => {
-    setValue(name)
+    setValue(name);
   };
   return (
     <div className="Todo-header">
