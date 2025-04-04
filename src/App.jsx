@@ -7,10 +7,7 @@ const App = () => {
   const name = "Eric";
   const data = { age: 24, address: "HY" };
 
-  const [todoList, setTodoList] = useState([
-    { id: 1, name: "Learn React" },
-    { id: 2, name: "Watch TV" },
-  ]);
+  const [todoList, setTodoList] = useState([]);
 
   const myFucntion = (name) => {
     const newTodo = { id: getRandomInt(1, 100), name: name };
@@ -26,10 +23,13 @@ const App = () => {
       <div className="container">
         <div className="Todo-name">Todo List</div>
         <TodoNew myFucntion={myFucntion} />
-        <TodoData name={name} data={data} todoList={todoList} />
-        <div className="todo-logo">
-          <img src={reactLogo} alt="" className="logo" />
-        </div>
+        {todoList.length > 0 ? (
+          <TodoData name={name} data={data} todoList={todoList} />
+        ) : (
+          <div className="todo-logo">
+            <img src={reactLogo} alt="" className="logo" />
+          </div>
+        )}
       </div>
     </>
   );
