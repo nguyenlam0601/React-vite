@@ -1,5 +1,10 @@
+import { useState } from "react";
+
 const TodoData = (props) => {
-  const { todoList } = props;
+  const { todoList, deleteData } = props;
+  const getId = (id) => {
+    deleteData(id);
+  };
 
   return (
     <div className="Todo-body">
@@ -9,7 +14,7 @@ const TodoData = (props) => {
           <div className="Todo-data" key={item.id}>
             <div className="data-content">{item.name}</div>
             <div className="data-btn">
-              <button>Delete</button>
+              <button onClick={() => getId(item.id)}>Delete</button>
               <button>Update</button>
             </div>
           </div>
