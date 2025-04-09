@@ -6,7 +6,7 @@ import RegisterPage from "./pages/registerPages.jsx";
 import ProductPage from "./pages/productPages.jsx";
 import UserPage from "./pages/userPages.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import "./styles/global.css";
 const router = createBrowserRouter([
   {
     path: "/",
