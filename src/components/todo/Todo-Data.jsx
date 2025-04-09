@@ -1,31 +1,45 @@
 import { useState } from "react";
 
 const TodoData = (props) => {
-  const { todoList, deleteData } = props;
-  const [updateFlg, setUpdateFlg] = useState(false);
+  const { todoList, deleteData, updateData } = props;
+  const [updateFlg, setUpdateFlg] = useState({});
+  const [inputValueUpdate, setValueUpdate] = useState("");
   const getId = (id) => {
     deleteData(id);
   };
-  const updateItem = (index) => {
-    setUpdateFlg(true);
-    alert(index);
+  const updateItem = (id) => {
+    setUpdateFlg((prevFlags) => ({
+      ...prevFlags,
+      [id]: !prevFlags[id],
+    }));
+    if (inputValueUpdate.length > 0) {
+      console.log("inputValueUpdate.length", inputValueUpdate.length);
+      updateData(id, inputValueUpdate);
+    }
+  };
+  const handleOnchage = (name) => {
+    setValueUpdate(name);
+    console.log("input update", name);
   };
   return (
     <div className="Todo-body">
-      {todoList.map((item, index) => {
-        console.log("value", item.name);
+      {todoList.map((item) => {
         return (
           <div className="Todo-data" key={item.id}>
-            {
-              (updateFlg = false ? (
-                <input type="text" />
-              ) : (
-                <div className="data-content">{item.name}</div>
-              ))
-            }
+            {updateFlg[item.id] ? (
+              <input
+                type="text"
+                onChange={(event) => {
+                  handleOnchage(event.target.value);
+                }}
+                value={inputValueUpdate}
+              />
+            ) : (
+              <div className="data-content">{item.name}</div>
+            )}
             <div className="data-btn">
               <button onClick={() => getId(item.id)}>Delete</button>
-              <button onClick={() => updateItem(index)}>Update</button>
+              <button onClick={() => updateItem(item.id)}>Update</button>
             </div>
           </div>
         );
