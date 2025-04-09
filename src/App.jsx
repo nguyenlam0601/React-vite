@@ -30,19 +30,27 @@ const App = () => {
       )
     );
   };
+  const deleteAllTodo = () => {
+    setTodoList([]);
+  };
   return (
     <>
       <div className="container">
         <div className="Todo-name">Todo List</div>
         <TodoNew myFucntion={myFucntion} />
         {todoList.length > 0 ? (
-          <TodoData
-            name={name}
-            data={data}
-            todoList={todoList}
-            deleteData={deleteData}
-            updateData={updateData}
-          />
+          <>
+            <TodoData
+              name={name}
+              data={data}
+              todoList={todoList}
+              deleteData={deleteData}
+              updateData={updateData}
+            />
+            <div className="todo-delete">
+              <button onClick={deleteAllTodo}>Delete All</button>
+            </div>
+          </>
         ) : (
           <div className="todo-logo">
             <img src={reactLogo} alt="" className="logo" />
