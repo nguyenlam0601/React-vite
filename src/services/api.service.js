@@ -10,4 +10,8 @@ const createUserApi = (fullName, email, password, phone) => {
   return axios.post(URL_BACKEND, data);
 };
 const updateUserApi = () => {};
-export { createUserApi, updateUserApi };
+const getUserApi = () => {
+  const URL_BACKEND = "/api/v1/user";
+  return axios.get(URL_BACKEND);
+};
+export { createUserApi, updateUserApi, getUserApi };
