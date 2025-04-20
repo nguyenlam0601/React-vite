@@ -1,8 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Table } from "antd";
+import { notification, Popconfirm, Table } from "antd";
 import UpdateUserModal from "./update.user.modal";
 import { useState } from "react";
 import ViewUserDetail from "./view.user.detail";
+import { deleteUserApi } from "../../services/api.service";
+//import DeleteUserModal from "./delete.user.modal";
 
 const UserTable = (props) => {
   const { dataUsers, getAllUser } = props;
@@ -10,6 +12,8 @@ const UserTable = (props) => {
   const [dataUpdate, setDataUpdate] = useState(null);
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [dataDelete, setDataDelete] = useState(null);
   const columns = [
     {
       title: "Id",
@@ -47,12 +51,37 @@ const UserTable = (props) => {
             }}
             style={{ cursor: "pointer", color: "orange" }}
           />
-          <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          <Popconfirm
+            title="Delete user"
+            description="Are you sure to delete this user?"
+            onConfirm={() => {
+              handleDeleteBtn(record._id);
+            }}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          </Popconfirm>
         </div>
       ),
     },
   ];
-
+  const handleDeleteBtn = async (id) => {
+    const res = await deleteUserApi(id);
+    if (res.data) {
+      notification.success({
+        message: "Delete User",
+        description: "Xóa user thành công",
+      });
+      await getAllUser();
+    } else {
+      notification.error({
+        message: "Error delete user",
+        description: JSON.stringify(res.message),
+      });
+    }
+  };
   return (
     <>
       <Table columns={columns} dataSource={dataUsers} rowKey={"_id"} />

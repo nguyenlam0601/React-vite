@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createUserApi } from "../../services/api.service";
 
 const UserForm = (props) => {
-  const { getAllUsers } = props;
+  const { getAllUser } = props;
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
@@ -18,7 +18,7 @@ const UserForm = (props) => {
         description: "Tạo user thành công",
       });
       resetAndCloseModal();
-      await getAllUsers();
+      await getAllUser();
     } else {
       notification.error({
         message: "Error create user",
