@@ -1,16 +1,9 @@
-import {
-  Button,
-  Descriptions,
-  Flex,
-  Input,
-  message,
-  Modal,
-  notification,
-} from "antd";
+import { Button, Input, Modal, notification } from "antd";
 import { useState } from "react";
 import { createUserApi } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
+  const { getAllUsers } = props;
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
@@ -24,7 +17,8 @@ const UserForm = () => {
         message: "Create User",
         description: "Tạo user thành công",
       });
-      setIsOpen(false);
+      resetAndCloseModal();
+      await getAllUsers();
     } else {
       notification.error({
         message: "Error create user",
@@ -32,16 +26,23 @@ const UserForm = () => {
       });
     }
   };
+  const resetAndCloseModal = () => {
+    setIsOpen(false);
+    setFullName("");
+    setEmail("");
+    setPassWord("");
+    setPhone("");
+  };
   return (
     <div className="user-form" style={{ margin: "20px 0" }}>
       <Modal
-        title="Basic Modal"
+        title="Create User"
         open={isOpen}
         onOk={() => {
           handleSubmitBtn();
         }}
         onCancel={() => {
-          setIsOpen(false);
+          resetAndCloseModal();
         }}
         maskClosable={false}
         okText={"Create"}

@@ -1,16 +1,21 @@
-import { Space, Table, Tag } from "antd";
-import { useEffect, useState } from "react";
-import { getUserApi } from "../../services/api.service";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Table } from "antd";
+import UpdateUserModal from "./update.user.modal";
+import { useState } from "react";
 
-const UserTable = () => {
-  const [dataUsers, setDataUsers] = useState([]);
-  useEffect(() => {
-    GetAllUser();
-  }, []);
+const UserTable = (props) => {
+  const { dataUsers, getAllUser } = props;
+  const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState(null);
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
+      render: (_, record) => (
+        <>
+          <a>{record._id}</a>
+        </>
+      ),
     },
     {
       title: "Full Name",
@@ -20,12 +25,35 @@ const UserTable = () => {
       title: "Email",
       dataIndex: "email",
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "20px" }}>
+          <EditOutlined
+            onClick={() => {
+              setIsOpenUpdateModal(true);
+              setDataUpdate(record);
+            }}
+            style={{ cursor: "pointer", color: "orange" }}
+          />
+          <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+        </div>
+      ),
+    },
   ];
-  const GetAllUser = async () => {
-    const res = await getUserApi();
-    setDataUsers(res.data);
-  };
-  //GetAllUser();
-  return <Table columns={columns} dataSource={dataUsers} rowKey={"_id"} />;
+
+  return (
+    <>
+      <Table columns={columns} dataSource={dataUsers} rowKey={"_id"} />
+      <UpdateUserModal
+        setIsOpenUpdateModal={setIsOpenUpdateModal}
+        isOpenUpdateModal={isOpenUpdateModal}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
+        getAllUser={getAllUser}
+      />
+    </>
+  );
 };
 export default UserTable;
