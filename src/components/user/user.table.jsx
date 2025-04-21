@@ -12,8 +12,7 @@ const UserTable = (props) => {
   const [dataUpdate, setDataUpdate] = useState(null);
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
-  const [dataDelete, setDataDelete] = useState(null);
+
   const columns = [
     {
       title: "Id",

@@ -3,8 +3,9 @@ import UserTable from "../components/user/user.table";
 import { useEffect, useState } from "react";
 import { getUserApi } from "../services/api.service";
 
-const userPages = () => {
+const UserPages = () => {
   const [dataUsers, setDataUsers] = useState([]);
+
   useEffect(() => {
     getAllUser();
   }, []);
@@ -21,4 +22,4 @@ const userPages = () => {
     </div>
   );
 };
-export default userPages;
+export default UserPages;

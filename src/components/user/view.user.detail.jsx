@@ -1,4 +1,4 @@
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
 
 const ViewUserDetail = (props) => {
   const { isOpenDetail, setIsOpenDetail, setDataDetail, dataDetail } = props;
