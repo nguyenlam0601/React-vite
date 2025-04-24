@@ -1,12 +1,71 @@
-import { Drawer } from "antd";
+import { Button, Drawer, notification } from "antd";
+import { useState } from "react";
+import {
+  handleUploadFile,
+  updateAvatarUserApi,
+} from "../../services/api.service";
 
 const ViewUserDetail = (props) => {
-  const { isOpenDetail, setIsOpenDetail, setDataDetail, dataDetail } = props;
+  const {
+    isOpenDetail,
+    setIsOpenDetail,
+    setDataDetail,
+    dataDetail,
+    getAllUser,
+  } = props;
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const onClose = () => {
     setIsOpenDetail(false);
     setDataDetail(null);
   };
   if (!dataDetail) return null;
+  const onSelectFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(null);
+      setPreview(null);
+      return;
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+  const handleUploadUserAvatar = async () => {
+    const resUpdLoad = await handleUploadFile(selectedFile, "avatar");
+    if (resUpdLoad.data) {
+      const newAvatar = resUpdLoad.data.fileUploaded;
+      const resUpdateAvatar = await updateAvatarUserApi(
+        newAvatar,
+        dataDetail._id,
+        dataDetail.fullName,
+        dataDetail.phone
+      );
+      if (resUpdateAvatar.data) {
+        setIsOpenDetail(false);
+        setSelectedFile(null);
+        setPreview(null);
+        await getAllUser();
+        notification.success({
+          message: "Update user avatar",
+          description: "Cập nhật avatar thành công",
+        });
+      } else {
+        notification.error({
+          message: "Error Upload File",
+          description: JSON.stringify(resUpdLoad.message),
+        });
+      }
+    } else {
+      notification.error({
+        message: "Error Upload File",
+        description: JSON.stringify(resUpdLoad.message),
+      });
+    }
+  };
   return (
     <>
       <Drawer
@@ -52,8 +111,36 @@ const ViewUserDetail = (props) => {
           >
             Upload file
           </label>
-          <input type="file" hidden id="btnUpload" />
+          <input
+            type="file"
+            hidden
+            id="btnUpload"
+            onChange={(e) => {
+              onSelectFile(e);
+            }}
+          />
         </div>
+        {preview && (
+          <>
+            <div
+              style={{
+                width: "150px",
+                height: "100px",
+                marginTop: "10px",
+                marginBottom: "15px",
+              }}
+            >
+              <img
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                src={preview}
+                alt=""
+              />
+            </div>
+            <Button type="primary" onClick={() => handleUploadUserAvatar()}>
+              Save
+            </Button>
+          </>
+        )}
       </Drawer>
     </>
   );

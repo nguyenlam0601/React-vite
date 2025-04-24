@@ -29,4 +29,33 @@ const getUserApi = () => {
   const URL_BACKEND = "/api/v1/user";
   return axios.get(URL_BACKEND);
 };
-export { createUserApi, updateUserApi, deleteUserApi, getUserApi };
+const handleUploadFile = (file, folder) => {
+  const URL_BACKEND = "/api/v1/file/upload";
+  let config = {
+    headers: {
+      "upload-type": folder,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  const bodyFormData = new FormData();
+  bodyFormData.append("fileImg", file);
+  return axios.post(URL_BACKEND, bodyFormData, config);
+};
+const updateAvatarUserApi = (avatar, _id, fullName, phone) => {
+  const URL_BACKEND = "/api/v1/user";
+  const data = {
+    _id,
+    fullName,
+    phone,
+    avatar,
+  };
+  return axios.put(URL_BACKEND, data);
+};
+export {
+  createUserApi,
+  updateUserApi,
+  deleteUserApi,
+  getUserApi,
+  handleUploadFile,
+  updateAvatarUserApi,
+};
