@@ -7,13 +7,29 @@ import { deleteUserApi } from "../../services/api.service";
 //import DeleteUserModal from "./delete.user.modal";
 
 const UserTable = (props) => {
-  const { dataUsers, getAllUser } = props;
+  const {
+    dataUsers,
+    getAllUser,
+    current,
+    pageSize,
+    total,
+    setCurrent,
+    setPageSize,
+  } = props;
   const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [dataDetail, setDataDetail] = useState(null);
 
   const columns = [
+    {
+      title: "STT",
+      render: (_, record, index) => (
+        <>
+          <div>{index + 1}</div>
+        </>
+      ),
+    },
     {
       title: "Id",
       dataIndex: "_id",
@@ -81,9 +97,30 @@ const UserTable = (props) => {
       });
     }
   };
+  const onChange = (pagination, filters, sorter, extra) => {};
+
   return (
     <>
-      <Table columns={columns} dataSource={dataUsers} rowKey={"_id"} />
+      <Table
+        columns={columns}
+        dataSource={dataUsers}
+        rowKey={"_id"}
+        pagination={{
+          current: current,
+          pageSize: pageSize,
+          showSizeChanger: true,
+          total: total,
+          showTotal: (total, range) => {
+            return (
+              <div>
+                {" "}
+                {range[0]}-{range[1]} trên {total} rows
+              </div>
+            );
+          },
+        }}
+        onChange={onChange}
+      />
       <UpdateUserModal
         setIsOpenUpdateModal={setIsOpenUpdateModal}
         isOpenUpdateModal={isOpenUpdateModal}
