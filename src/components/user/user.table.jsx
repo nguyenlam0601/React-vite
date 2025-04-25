@@ -26,7 +26,7 @@ const UserTable = (props) => {
       title: "STT",
       render: (_, record, index) => (
         <>
-          <div>{index + 1}</div>
+          <div>{index + 1 + (current - 1) * pageSize}</div>
         </>
       ),
     },
@@ -97,7 +97,18 @@ const UserTable = (props) => {
       });
     }
   };
-  const onChange = (pagination, filters, sorter, extra) => {};
+  const onChange = (pagination, filters, sorter, extra) => {
+    if (pagination && pagination.current) {
+      if (+pagination.current !== +current) {
+        setCurrent(+pagination.current);
+      }
+    }
+    if (pagination && pagination.pageSize) {
+      if (+pagination.pageSize !== +pageSize) {
+        setPageSize(+pagination.pageSize);
+      }
+    }
+  };
 
   return (
     <>
