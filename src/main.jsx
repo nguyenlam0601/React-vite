@@ -1,13 +1,13 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import LoginPage from "./pages/loginPages.jsx";
-import RegisterPage from "./pages/registerPages.jsx";
 import BookPage from "./pages/bookPages.jsx";
 import UserPage from "./pages/userPages.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/global.css";
 import TodoApp from "./components/todo/TodoApp.jsx";
 import ErrorPage from "./pages/errorPage.jsx";
+import RegisterPage from "./pages/register.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
