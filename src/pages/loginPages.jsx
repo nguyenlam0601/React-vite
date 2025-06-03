@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import { Link } from "react-router-dom";
 
-const loginPages = () => {
+const LoginPages = () => {
   const [form] = Form.useForm();
   const onFinish = async (value) => {
     console.log(value);
@@ -56,4 +56,4 @@ const loginPages = () => {
     </Row>
   );
 };
-export default loginPages;
+export default LoginPages;
