@@ -1,10 +1,34 @@
-import { Button, Col, Divider, Form, Input, Row } from "antd";
-import { Link } from "react-router-dom";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  message,
+  notification,
+  Row,
+} from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { loginApi } from "../services/api.service";
+import { useState } from "react";
 
 const LoginPages = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const onFinish = async (value) => {
-    console.log(value);
+    setLoading(true);
+    const res = await loginApi(value.email, value.password);
+    if (res.data) {
+      message.success("Đăng nhập thành công");
+      navigate("/");
+    } else {
+      notification.error({
+        message: "Thông báo đăng nhập",
+        description: JSON.stringify(res.message),
+      });
+    }
+    setLoading(false);
   };
   return (
     <Row justify={"center"} style={{ marginTop: "30px" }}>
@@ -15,7 +39,8 @@ const LoginPages = () => {
             margin: "5px",
             border: "1px solid #ccc",
             borderRadius: "5px",
-          }}>
+          }}
+        >
           <legend>Đăng Nhập</legend>
           <Form
             name="basic"
@@ -30,18 +55,26 @@ const LoginPages = () => {
               rules={[
                 { required: true },
                 { type: "email", message: "Email không đúng định dạng" },
-              ]}>
+              ]}
+            >
               <Input />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true }]}>
+              rules={[{ required: true }]}
+            >
               <Input.Password />
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button type="primary">Login</Button>
+              <Button
+                loading={loading}
+                onClick={() => form.submit()}
+                type="primary"
+              >
+                Login
+              </Button>
               <Link to={"/"}>Go to hompage -&gt; </Link>
             </div>
           </Form>
