@@ -5,10 +5,14 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
+import { useContext } from "react";
 import { Children, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 const Header = () => {
   const [current, setCurrent] = useState("mail");
+  const { user } = useContext(AuthContext);
+  console.log(">>>check ", user);
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
