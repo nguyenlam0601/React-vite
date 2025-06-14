@@ -9,6 +9,7 @@ import TodoApp from "./components/todo/TodoApp.jsx";
 import ErrorPage from "./pages/errorPage.jsx";
 import RegisterPage from "./pages/register.jsx";
 import { AuthWrapper } from "./components/context/auth.context.jsx";
+import PrivateRouter from "./pages/private.router.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +19,11 @@ const router = createBrowserRouter([
       { index: true, element: <TodoApp /> },
       {
         path: "/book",
-        element: <BookPage />,
+        element: (
+          <PrivateRouter>
+            <BookPage />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/user",

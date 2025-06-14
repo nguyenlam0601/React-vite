@@ -6,7 +6,6 @@ const RegisterPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const onFinish = async (value) => {
-    console.log(value);
     const res = await registerUserApi(
       value.fullName,
       value.email,

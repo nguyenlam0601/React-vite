@@ -13,13 +13,11 @@ const TodoData = (props) => {
       [id]: !prevFlags[id],
     }));
     if (inputValueUpdate.length > 0) {
-      console.log("inputValueUpdate.length", inputValueUpdate.length);
       updateData(id, inputValueUpdate);
     }
   };
   const handleOnchage = (name) => {
     setValueUpdate(name);
-    console.log("input update", name);
   };
   return (
     <div className="Todo-body">

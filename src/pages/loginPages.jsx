@@ -43,8 +43,7 @@ const LoginPages = () => {
             margin: "5px",
             border: "1px solid #ccc",
             borderRadius: "5px",
-          }}
-        >
+          }}>
           <legend>Đăng Nhập</legend>
           <Form
             name="basic"
@@ -59,24 +58,25 @@ const LoginPages = () => {
               rules={[
                 { required: true },
                 { type: "email", message: "Email không đúng định dạng" },
-              ]}
-            >
+              ]}>
               <Input />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true }]}
-            >
-              <Input.Password />
+              rules={[{ required: true }]}>
+              <Input.Password
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") form.submit();
+                }}
+              />
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 loading={loading}
                 onClick={() => form.submit()}
-                type="primary"
-              >
+                type="primary">
                 Login
               </Button>
               <Link to={"/"}>Go to hompage -&gt; </Link>

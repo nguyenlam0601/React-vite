@@ -3,6 +3,8 @@ import {
   HomeOutlined,
   SwitcherOutlined,
   SettingOutlined,
+  LoginOutlined,
+  AliwangwangOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useContext } from "react";
@@ -34,15 +36,31 @@ const Header = () => {
       key: "book",
       icon: <SwitcherOutlined />,
     },
-    {
-      label: "Cài đặt",
-      key: "setting",
-      icon: <SettingOutlined />,
-      children: [
-        { label: <Link to="/login">Đăng nhập</Link>, key: "login" },
-        { label: "Đăng xuất", key: "logout" },
-      ],
-    },
+    ...(!user.id
+      ? [
+          {
+            label: <Link to={"/login"}>Đăng nhập</Link>,
+            key: "login",
+            icon: <LoginOutlined />,
+          },
+        ]
+      : []),
+
+    ...(user.id
+      ? [
+          {
+            label: `Welcome ${user.fullName}`,
+            key: "setting",
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: "Đăng xuất",
+                key: "logout",
+              },
+            ],
+          },
+        ]
+      : []),
   ];
   return (
     <Menu
