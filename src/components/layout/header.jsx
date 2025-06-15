@@ -6,18 +6,37 @@ import {
   LoginOutlined,
   AliwangwangOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Menu, message } from "antd";
 import { useContext } from "react";
 import { Children, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { logOutApi } from "../../services/api.service";
 const Header = () => {
   const [current, setCurrent] = useState("mail");
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   console.log(">>>check ", user);
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
+  };
+  const handleLogOut = async () => {
+    const res = await logOutApi();
+    if (res.data) {
+      // clear data
+      localStorage.removeItem("access_token");
+      setUser({
+        email: "",
+        phone: "",
+        fullName: "",
+        role: "",
+        avatar: "",
+        id: "",
+      });
+      message.success("Đăng xuất thành công");
+      navigate("/");
+    }
   };
   const items = [
     {
@@ -54,7 +73,7 @@ const Header = () => {
             icon: <AliwangwangOutlined />,
             children: [
               {
-                label: "Đăng xuất",
+                label: <span onClick={() => handleLogOut()}>Đăng xuất</span>,
                 key: "logout",
               },
             ],

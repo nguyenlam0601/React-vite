@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const PrivateRouter = (props) => {
   const { user } = useContext(AuthContext);
   if (user && user.id) {
-    return Children.props;
+    return props.children;
   }
   return (
     <Result
